@@ -73,6 +73,7 @@ public:
     virtual void render(bool eggTransparency = false) override;
 
     void onMouseLeftDown(Event::Mouse* event);
+    void onMouseLeftUp(Event::Mouse* event);
     void onMouseDragStart(Event::Mouse* event);
     void onMouseDrag(Event::Mouse* event);
     void onMouseDragStop(Event::Mouse* event);

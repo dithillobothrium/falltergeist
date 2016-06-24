@@ -51,6 +51,7 @@ using Graphics::Rect;
 ItemsList::ItemsList(const Point& pos) : Falltergeist::UI::Base(pos)
 {
     mouseDownHandler().add( std::bind(&ItemsList::onMouseLeftDown, this, std::placeholders::_1));
+    mouseUpHandler().add( std::bind(&ItemsList::onMouseLeftUp, this, std::placeholders::_1));
     mouseDragStartHandler().add(std::bind(&ItemsList::onMouseDragStart, this, std::placeholders::_1));
     mouseDragHandler().add(     std::bind(&ItemsList::onMouseDrag, this, std::placeholders::_1));
     mouseDragStopHandler().add( std::bind(&ItemsList::onMouseDragStop, this, std::placeholders::_1));
@@ -81,11 +82,26 @@ void ItemsList::render(bool eggTransparency)
 {
     //ActiveUI::render();
     unsigned int i = 0;
+
+    InventoryItem *draggedItem = nullptr;
+
     for (auto& item : _inventoryItems)
     {
-        item->setPosition(position() + Point(0, _slotHeight*i));
-        item->render();
+        if(item->type() != InventoryItem::Type::DRAG)
+        {
+            item->setPosition(position() + Point(0, _slotHeight*i));
+            item->render();
+        }
+        else
+        {
+            draggedItem = item.get();
+        }
         i++;
+    }
+
+    if(draggedItem)
+    {
+        draggedItem->render();
     }
 }
 
@@ -96,7 +112,35 @@ std::vector<std::unique_ptr<InventoryItem>>& ItemsList::inventoryItems()
 
 void ItemsList::onMouseLeftDown(Event::Mouse* event)
 {
-    Logger::critical() << "mouseleftdown" << std::endl;
+//    unsigned int index = (event->position().y() - y())/_slotHeight;
+//    if (index < _inventoryItems.size())
+//    {
+//        Game::getInstance()->mouse()->pushState(Input::Mouse::Cursor::NONE);
+//        Game::getInstance()->mixer()->playACMSound("sound/sfx/ipickup1.acm");
+//        _draggedItem = _inventoryItems.at(index).get();
+//        _draggedItem->setType(InventoryItem::Type::DRAG);
+//        _draggedItem->setOffset((event->position() - _draggedItem->position()) - (_draggedItem->size() / 2));
+//    }
+//    else
+//    {
+//        _draggedItem = nullptr;
+//    }
+    //Logger::critical() << "mouseleftdown" << std::endl;
+}
+
+void ItemsList::onMouseLeftUp(Event::Mouse* event)
+{
+//    if (_draggedItem)
+//    {
+//        Game::getInstance()->mouse()->popState();
+//        Game::getInstance()->mixer()->playACMSound("sound/sfx/iputdown.acm");
+//        _draggedItem->setOffset(0, 0);
+//        _draggedItem->setType(_type);
+//        auto itemevent = std::make_unique<Event::Mouse>(*event, "itemdragstop");
+//        itemevent->setTarget(this);
+//        emitEvent(std::move(itemevent), itemDragStopHandler());
+//    }
+    //Logger::critical() << "mouseleftup" << std::endl;
 }
 
 void ItemsList::onMouseDragStart(Event::Mouse* event)
