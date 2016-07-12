@@ -50,6 +50,7 @@
 #include "../UI/PlayerPanel.h"
 #include "../UI/Rectangle.h"
 #include "../UI/TextArea.h"
+#include "../UI/InventoryList.h"
 
 // Third party includes
 
@@ -262,7 +263,7 @@ namespace Falltergeist
             addUI("rightHandLabel", rightHandLabel);
             addUI("screenLabel", screenLabel);
 
-            auto inventoryList = new UI::ItemsList(Point(40, 40));
+            UI::InventoryList* inventoryList = new UI::InventoryList(Point(40, 40));
             inventoryList->setItems(game->player()->inventory());
             addUI("inventory_list", inventoryList);
 
@@ -273,7 +274,7 @@ namespace Falltergeist
                 inventoryItem->setType(UI::InventoryItem::Type::SLOT);
                 inventoryItem->itemDragStopHandler().add([inventoryList](Event::Mouse* event){ inventoryList->onItemDragStop(event); });
                 inventoryList->itemDragStopHandler().add([inventoryItem](Event::Mouse* event){ inventoryItem->onArmorDragStop(event); });
-                addUI(inventoryItem);
+                inventoryList->setSlotItem(std::unique_ptr<UI::InventoryItem>(inventoryItem));
             }
 
             // icon: left hand
@@ -282,7 +283,7 @@ namespace Falltergeist
                 inventoryItem->setType(UI::InventoryItem::Type::SLOT);
                 inventoryItem->itemDragStopHandler().add([inventoryList](Event::Mouse* event){ inventoryList->onItemDragStop(event, HAND::LEFT); });
                 inventoryList->itemDragStopHandler().add([inventoryItem](Event::Mouse* event){ inventoryItem->onHandDragStop(event, HAND::LEFT); });
-                addUI(inventoryItem);
+                inventoryList->setSlotItem(std::unique_ptr<UI::InventoryItem>(inventoryItem));
             }
 
             // icon: right hand
@@ -291,7 +292,7 @@ namespace Falltergeist
                 inventoryItem->setType(UI::InventoryItem::Type::SLOT);
                 inventoryItem->itemDragStopHandler().add([inventoryList](Event::Mouse* event){ inventoryList->onItemDragStop(event, HAND::RIGHT); });
                 inventoryList->itemDragStopHandler().add([inventoryItem](Event::Mouse* event){ inventoryItem->onHandDragStop(event, HAND::RIGHT); });
-                addUI(inventoryItem);
+                inventoryList->setSlotItem(std::unique_ptr<UI::InventoryItem>(inventoryItem));
             }
 
             //initialize inventory scroll buttons
