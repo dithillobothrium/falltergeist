@@ -208,7 +208,6 @@ void InventoryItem::onArmorDragStop(Event::Mouse* event)
 
     if (ItemsList* itemsList = dynamic_cast<ItemsList*>(event->target()))
     {
-
         InventoryItem* draggedItem = itemsList->draggedItem();
         auto itemObject = draggedItem->item();
         if(itemObject->subtype() != Game::ItemObject::Subtype::ARMOR) return;
@@ -255,7 +254,30 @@ void InventoryItem::onHandDragStop(Event::Mouse* event, HAND hand)
             player->setRightHandSlot(item);
         }
     }
+
+    if (auto inventoryItem = dynamic_cast<UI::InventoryItem*>(event->target()))
+    {
+        auto item = inventoryItem->item();
+
+        inventoryItem->setItem(_item);
+
+        this->setItem(item);
+
+        if (hand == HAND::LEFT)
+        {
+            Game::getInstance()->player()->setLeftHandSlot(_item);
+            Game::getInstance()->player()->setRightHandSlot(inventoryItem->item());
+            Logger::critical() << " LEFT " << std::endl;
+        }
+        else
+        {
+            Game::getInstance()->player()->setRightHandSlot(_item);
+            Game::getInstance()->player()->setLeftHandSlot(inventoryItem->item());
+            Logger::critical() << " RIGHT " << std::endl;
+        }
+    }
 }
+
 
 Size InventoryItem::size() const
 {
