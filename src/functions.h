@@ -30,7 +30,7 @@
 namespace Falltergeist
 {
 
-enum MSG_TYPE
+enum MSG_TYPE : unsigned int
 {
     MSG_INVENTORY = 0,
     MSG_LOAD_SAVE,
@@ -49,7 +49,7 @@ enum MSG_TYPE
     MSG_TYPE_COUNT
 };
 
-std::string _t(MSG_TYPE type, size_t number);
+std::string _t(MSG_TYPE type, unsigned int number);
 
 std::string path_basename(const std::string& path, bool removeExtension = false);
 

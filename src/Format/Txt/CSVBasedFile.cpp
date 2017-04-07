@@ -25,6 +25,7 @@
 // C++ standard includes
 
 // Falltergeist includes
+#include "../Dat/Stream.h"
 #include "../Txt/CSVBasedFile.h"
 #include "../Txt/CSVParser.h"
 
@@ -38,15 +39,10 @@ namespace Txt
 {
 
 template <typename ItemType>
-CSVBasedFile<ItemType>::CSVBasedFile(std::ifstream* stream) : BaseFile(stream)
+CSVBasedFile<ItemType>::CSVBasedFile(Dat::Stream&& stream)
 {
-    _initialize();
-}
-
-template <typename ItemType>
-CSVBasedFile<ItemType>::CSVBasedFile(Dat::Entry* datFileEntry) : BaseFile(datFileEntry)
-{
-    _initialize();
+    std::istream istr(&stream);
+    _parseText(istr);
 }
 
 template <typename ItemType>
@@ -66,7 +62,7 @@ void CSVBasedFile<ItemType>::_parseText(std::istream& istr)
         {
             _items.push_back(_parseItem(row));
         }
-        catch (const std::out_of_range& e)
+        catch (const std::out_of_range&)
         {
             // TODO: warnings?
         }

@@ -33,7 +33,7 @@
 namespace Falltergeist
 {
 
-std::string _t(MSG_TYPE type, size_t number)
+std::string _t(MSG_TYPE type, unsigned int number)
 {
     static const std::string msgFiles[] = {
         "text/english/game/inventry.msg",
@@ -53,7 +53,7 @@ std::string _t(MSG_TYPE type, size_t number)
     static_assert(MSG_TYPE_COUNT <= msgFilesSize,
                   "MSG_TYPE enum doesn't match with msg files!");
 
-    if (type < 0 || type >= msgFilesSize)
+    if (type >= msgFilesSize)
     {
         throw Exception("_t() - wrong MSG file type: " + std::to_string(type));
     }

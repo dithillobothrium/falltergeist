@@ -31,6 +31,7 @@
 #include "../Logger.h"
 
 // Third-party includes
+#define GLM_FORCE_RADIANS
 #include <glm/gtc/type_ptr.hpp>
 
 namespace Falltergeist
@@ -124,7 +125,7 @@ bool Shader::_load(std::string fname)
     std::string vpsrc;
 
     fpfile.seekg(0, std::ios::end);
-    fpsrc.reserve(fpfile.tellg());
+    fpsrc.reserve(static_cast<size_t>(fpfile.tellg()));
     fpfile.seekg(0, std::ios::beg);
 
     fpsrc.assign((std::istreambuf_iterator<char>(fpfile)),
@@ -132,7 +133,7 @@ bool Shader::_load(std::string fname)
     fpfile.close();
 
     vpfile.seekg(0, std::ios::end);
-    vpsrc.reserve(vpfile.tellg());
+    vpsrc.reserve(static_cast<size_t>(vpfile.tellg()));
     vpfile.seekg(0, std::ios::beg);
 
     vpsrc.assign((std::istreambuf_iterator<char>(vpfile)),
@@ -272,7 +273,7 @@ void Shader::setUniform(const std::string &uniform, const glm::vec3 &vec)
 
 void Shader::setUniform(const std::string &uniform, std::vector<GLuint> vec)
 {
-    glUniform1iv(getUniform(uniform), vec.size(), (const int*)&vec[0]);
+    glUniform1iv(getUniform(uniform), static_cast<GLsizei>(vec.size()), (const int*)&vec[0]);
 }
 
 void Shader::setUniform(const std::string &uniform, const glm::vec4 &vec)
@@ -322,7 +323,7 @@ void Shader::setUniform(const GLint &uniform, const glm::vec3 &vec)
 
 void Shader::setUniform(const GLint &uniform, std::vector<GLuint> vec)
 {
-    glUniform1iv((uniform), vec.size(), (const int*)&vec[0]);
+    glUniform1iv((uniform), static_cast<GLsizei>(vec.size()), (const int*)&vec[0]);
 }
 
 void Shader::setUniform(const GLint &uniform, const glm::vec4 &vec)
