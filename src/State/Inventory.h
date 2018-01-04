@@ -24,7 +24,7 @@
 
 // Falltergeist includes
 #include "../State/State.h"
-
+#include "../Game/Timer.h"
 // Third party includes
 
 namespace Falltergeist
@@ -61,6 +61,10 @@ namespace Falltergeist
             private:
                 std::string _handItemSummary (Game::ItemObject* hand);
                 void _screenShow (unsigned int PID);
+
+//                Game::Timer _actionCursorTimer;
+//
+//                const int DROPDOWN_DELAY = 350;
         };
     }
 }

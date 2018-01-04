@@ -132,6 +132,7 @@ namespace Falltergeist
                     {
                         if (!_actionCursorButtonPressed && (_actionCursorLastObject != _objectUnderCursor))
                         {
+                            Logger::info() << "obj under cursor: " << _objectUnderCursor->name() << std::endl;
                             _objectUnderCursor->look_at_p_proc();
                             _actionCursorLastObject = _objectUnderCursor;
                         }
@@ -166,6 +167,19 @@ namespace Falltergeist
         {
             _objectUnderCursor = nullptr;
             _actionCursorTimer.stop();
+        }
+
+        void Location::setCallbacksForObject(Game::Object* object)
+        {
+            if(object->ui())
+            {
+                object->ui()->mouseDownHandler().add([&](Event::Mouse* event){ onObjectMouseEvent(event, object); });
+                object->ui()->mouseClickHandler().add([&](Event::Mouse* event){ onObjectMouseEvent(event, object); });
+                object->ui()->mouseInHandler().add([&](Event::Mouse* event){ onObjectHover(event, object); });
+                // TODO: get rid of mousemove handler?
+                object->ui()->mouseMoveHandler().add([&](Event::Mouse* event){ onObjectHover(event, object); });
+                object->ui()->mouseOutHandler().add([&](Event::Mouse* event){ onObjectHover(event, object); });
+            }
         }
 
         void Location::setLocation(const std::string& name)
@@ -271,6 +285,8 @@ namespace Falltergeist
                     continue;
                 }
 
+
+
                 object->setFID(mapObject->FID());
                 object->setElevation(_currentElevation);
                 object->setOrientation(mapObject->orientation());
@@ -279,6 +295,7 @@ namespace Falltergeist
                 object->setFlags(mapObject->flags());
                 object->setDefaultFrame(mapObject->frameNumber());
 
+                setCallbacksForObject(object);
 
                 if (auto exitGrid = dynamic_cast<Game::ExitMiscObject*>(object))
                 {
@@ -373,6 +390,7 @@ namespace Falltergeist
             {
                 auto player = Game::getInstance()->player();
                 player->setArmorSlot(nullptr);
+                setCallbacksForObject(player);
                 // Just for testing
                 {
                     player->inventory()->push_back((Game::ItemObject*)Game::ObjectFactory::getInstance()->createObject(0x00000003)); // power armor

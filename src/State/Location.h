@@ -141,6 +141,8 @@ namespace Falltergeist
                 static const int KEYBOARD_SCROLL_STEP;
                 static const int DROPDOWN_DELAY;
 
+                void setCallbacksForObject(Game::Object* object);
+
                 // Timers
                 unsigned int _scrollTicks = 0;
                 unsigned int _scriptsTicks = 0;

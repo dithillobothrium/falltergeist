@@ -156,6 +156,36 @@ namespace Falltergeist
             armorClassLabel->setWidth(46);
             armorClassLabel->setHorizontalAlign(UI::TextArea::HorizontalAlign::RIGHT);
 
+            // cursor drop down
+            // action cursor stuff
+//            _actionCursorTimer.setInterval((unsigned)this->DROPDOWN_DELAY);
+//            _actionCursorTimer.tickHandler().add([this](Event::Event*)
+//                    {
+//                if (!_objectUnderCursor) return;
+//
+//                auto game = Game::getInstance();
+//                if (_actionCursorButtonPressed || game->mouse()->state() == Input::Mouse::Cursor::ACTION)
+//                {
+//                    if (!_actionCursorButtonPressed && (_actionCursorLastObject != _objectUnderCursor))
+//                    {
+//                        _objectUnderCursor->look_at_p_proc();
+//                        _actionCursorLastObject = _objectUnderCursor;
+//                    }
+//                    auto icons = getCursorIconsForObject(_objectUnderCursor);
+//                    if (icons.size() > 0)
+//                    {
+//                        if (dynamic_cast<CursorDropdown*>(game->topState()) != nullptr)
+//                        {
+//                            game->popState();
+//                        }
+//                        auto state = new CursorDropdown(std::move(icons), !_actionCursorButtonPressed);
+//                        state->setObject(_objectUnderCursor);
+//                        Game::getInstance()->pushState(state);
+//                    }
+//                }
+//                _actionCursorButtonPressed = false;
+//                    });
+
             // armorSlot, leftHand, rightHand
             Game::ArmorItemObject* armorSlot = player->armorSlot();
             Game::ItemObject* leftHand = player->leftHandSlot();

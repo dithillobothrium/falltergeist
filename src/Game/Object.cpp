@@ -186,12 +186,12 @@ void Object::addUIEventHandlers()
     if (_ui)
     {
         // TODO: these event handlers probably need to be set in State::Location
-        _ui->mouseDownHandler().add(std::bind(&State::Location::onObjectMouseEvent, Game::getInstance()->locationState(), std::placeholders::_1, this));
-        _ui->mouseClickHandler().add(std::bind(&State::Location::onObjectMouseEvent, Game::getInstance()->locationState(), std::placeholders::_1, this));
-        _ui->mouseInHandler().add(std::bind(&State::Location::onObjectHover, Game::getInstance()->locationState(), std::placeholders::_1, this));
-        // TODO: get rid of mousemove handler?
-        _ui->mouseMoveHandler().add(std::bind(&State::Location::onObjectHover, Game::getInstance()->locationState(), std::placeholders::_1, this));
-        _ui->mouseOutHandler().add(std::bind(&State::Location::onObjectHover, Game::getInstance()->locationState(), std::placeholders::_1, this));
+//        _ui->mouseDownHandler().add(std::bind(&State::Location::onObjectMouseEvent, Game::getInstance()->locationState(), std::placeholders::_1, this));
+//        _ui->mouseClickHandler().add(std::bind(&State::Location::onObjectMouseEvent, Game::getInstance()->locationState(), std::placeholders::_1, this));
+//        _ui->mouseInHandler().add(std::bind(&State::Location::onObjectHover, Game::getInstance()->locationState(), std::placeholders::_1, this));
+//        // TODO: get rid of mousemove handler?
+//        _ui->mouseMoveHandler().add(std::bind(&State::Location::onObjectHover, Game::getInstance()->locationState(), std::placeholders::_1, this));
+//        _ui->mouseOutHandler().add(std::bind(&State::Location::onObjectHover, Game::getInstance()->locationState(), std::placeholders::_1, this));
     }
 }
 

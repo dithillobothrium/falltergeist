@@ -4,7 +4,9 @@
  *  Created on: Jul 11, 2016
  *      Author: isivkov
  */
+#include <iostream>
 
+#include "../Logger.h"
 
 #include "InventoryList.h"
 
@@ -70,12 +72,20 @@ void InventoryList::setPosition(const Point& pos)
 
 
 //-----------------------------------------------------------------------------------------
+std::ostream& operator<<(std::ostream& stream, const Point& point)
+{
+    stream << point.x() << " "<< point.y();
+    return stream;
+}
+
 void InventoryList::updatePos()
 {
     for(auto& item: _slotItems)
     {
         item.second->setPosition(position() + item.first - _relativePos);
+        Logger::info() << "position " << position() <<" | "<< offset() << " | " << item.first<<" | "<< _relativePos<< std::endl;
     }
+
 }
 
 
